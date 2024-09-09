@@ -1,20 +1,19 @@
 # config.yaml
-virtual_env_path : C:\Users\MSI 11uc\Documents\ML\CW\virtual_env\7072\Scripts\python.exe
-src_model_path : C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\src\models
+
+# Model and Data Paths (relative paths within the repository)
+src_model_path: 'src/models'
 data:
   raw:
-    training: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\data\raw\training_data.csv'
-    test: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\data\raw\test_data.csv'
-    outlet_info_path: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\data\raw\outlet_info.csv'
-
+    training: 'data/raw/training_data.csv'
+    test: 'data/raw/test_data.csv'
+    outlet_info_path: 'data/raw/outlet_info.csv'
   processed:
-    processed_train_data_path: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\data\processed\train.csv'
-    processed_test_data_path: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\data\processed\test.csv'
-    featured_train_data_output_path: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\data\featured_output\train.csv'
-    featured_test_data_output_path: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\data\featured_output\test.csv'
-
+    processed_train_data_path: 'data/processed/train.csv'
+    processed_test_data_path: 'data/processed/test.csv'
+    featured_train_data_output_path: 'data/featured_output/train.csv'
+    featured_test_data_output_path: 'data/featured_output/test.csv'
   output:
-    output_data: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\data\predicted_output\predicted.csv'
+    output_data: 'data/predicted_output/predicted.csv'
     output_columns: ['date_id', 'store', 'item_dept', 'daily_sales_qty']
 
 data_cleaning:
@@ -29,18 +28,13 @@ feature_engineering:
   lag_days: [1, 2, 3]
 
 model_paths:
-  xgboost: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\models\xgboost_model.pkl'
-  xgboost_encoders: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\models\xgboost_encoders.pkl'
-  arima: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\models\arima_models.pkl'
-  lstm: 'C:\Users\MSI 11uc\Documents\ML\CW\Q5 Final\Q5_sales_forecasting_final\Q5_sales_forecasting\models\lstm_model.pkl'
+  xgboost: 'models/xgboost_model.pkl'
+  xgboost_encoders: 'models/xgboost_encoders.pkl'
+  arima: 'models/arima_models.pkl'
+  lstm: 'models/lstm_model.pkl'
 
 models:
   xgboost:
-    # n_estimators: 100
-    # max_depth: 7
-    # learning_rate: 0.1
-    # colsample_bytree: 0.6
-    # enable_categorical: True
     n_estimators: 162
     max_depth: 9
     learning_rate: 0.02318117860868824
@@ -64,18 +58,13 @@ evaluation:
     - 'date_id | store | item_dept'
     - 'date_id | store'
 
-# Add to your existing config.yaml
 pipeline:
   steps:
     - preprocess
     - build_features
     - train_models
     - evaluate_models
-##############
 
-
-
-# Model Parameters
 model:
   random_forest:
     n_estimators: 100
@@ -89,7 +78,6 @@ model:
     epochs: 50
     batch_size: 32
 
-# Feature Engineering
 features:
   time_features:
     - day_of_week
@@ -103,10 +91,8 @@ features:
     - sales_rolling_mean_7
     - sales_rolling_mean_30
 
-# Target Variable
 target: 'item_qty'
 
-# Forecasting Parameters
 forecast:
   start_date: '2022-02-01'
   end_date: '2022-02-28'
@@ -118,36 +104,25 @@ forecast:
     - 'XYZ'
     - 'ABC'
 
-# Evaluation
 evaluation:
   metric: 'MAPE'
   granularities:
     - ['store', 'department', 'date']
     - ['store', 'date']
 
-# Data Splitting
 train_test_split:
   test_size: 0.2
   random_state: 42
 
-# Logging
 logging:
   level: 'INFO'
   file: 'logs/sales_forecast.log'
 
-# Model Saving
 model_save_path:
   random_forest: 'models/random_forest_model.pkl'
   lstm: 'models/lstm_model.h5'
 
-# Web App
 app:
   host: '0.0.0.0'
-  port: 5000
+  port: 8501  # Default port for Streamlit
   debug: True
-
-# n_estimators: 100
-# max_depth: 7
-# learning_rate: 0.1
-# colsample_bytree: 0.6
-# enable_categorical: True
